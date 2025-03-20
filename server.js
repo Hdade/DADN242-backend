@@ -31,9 +31,9 @@ app.use(morgan('dev')); // Request logging
 
 // API routes
 
-app.get("/", async (req, res) => {
-  res.status(200).json({message: "hello"});
-});
+app.get('/api/hello', (req, res) => {
+   res.json({ message: 'Hello from Express backend'});
+ });
 
 app.get("/getSensor", async (req, res) => {
   const {User_ID} = req.body;
@@ -47,7 +47,7 @@ app.get("/getSensor", async (req, res) => {
 });
 
 app.get("/getOutputDevice", async (req, res) => {
-  const {User_ID} = req.body;
+  const {User_ID} = req.query;
   try {
     const devices = await getOutputDevice(User_ID);
     res.status(200).json(devices);
@@ -58,7 +58,7 @@ app.get("/getOutputDevice", async (req, res) => {
 });
 
 app.get("/getInfo", async (req, res) => {
-  const {User_ID} = req.body;
+  const {User_ID} = req.query;
   try {
     const info = await getInfo(User_ID);
     res.status(200).json(info);
@@ -69,7 +69,7 @@ app.get("/getInfo", async (req, res) => {
 });
 
 app.get("/getCurrentStat", async (req, res) => {
-  const {User_ID} = req.body;
+  const {User_ID} = req.query;
   try {
     const stat = await getCurrentStat(User_ID);
     res.status(200).json(stat);
@@ -80,7 +80,7 @@ app.get("/getCurrentStat", async (req, res) => {
 });
 
 app.get("/getActionLog", async (req, res) => {
-  const {Output_ID} = req.body;
+  const {Output_ID} = req.query;
   try {
     const log = await getActionLog(Output_ID);
     res.status(200).json(log);
@@ -91,7 +91,7 @@ app.get("/getActionLog", async (req, res) => {
 });
 
 app.get("/getEnvironmentCondition", async (req, res) => {
-  const {Sensor_ID} = req.body;
+  const {Sensor_ID} = req.query;
   try {
     const log = await getEnvironmentCondition(Sensor_ID);
     res.status(200).json(log);
