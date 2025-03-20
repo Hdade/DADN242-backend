@@ -31,12 +31,8 @@ app.use(morgan('dev')); // Request logging
 
 // API routes
 
-app.get('/api/hello', (req, res) => {
-   res.json({ message: 'Hello from Express backend'});
- });
-
 app.get("/getSensor", async (req, res) => {
-  const {User_ID} = req.body;
+  const {User_ID} = req.query;
   try {
     const sensors = await getSensor(User_ID);
     res.status(200).json(sensors);
