@@ -31,6 +31,10 @@ app.use(morgan('dev')); // Request logging
 
 // API routes
 
+app.get("/", async (req, res) => {
+  res.status(200).json({message: "hello"});
+});
+
 app.get("/getSensor", async (req, res) => {
   const {User_ID} = req.body;
   try {
