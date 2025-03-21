@@ -49,7 +49,6 @@ async function getSheetStat(Sensor_ID) {
     
     const sheet = doc.sheetsByIndex[0];
     const rows = await sheet.getRows(); // Fetch all rows
-    console.log("First row:", rows[0]);
 
     const filteredRows = rows
       .map(row => {
