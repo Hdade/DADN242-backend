@@ -91,7 +91,7 @@ const getCurrentStat = async (Sensor_ID)=> {
     const database = client.db("SmartPlant");
     const logCollection = database.collection("Environment_Condition");
     const stat = await logCollection.find({"Sensor_ID":Sensor_ID}).sort({Measured_Time:-1}).limit(1).toArray();
-    const ans = stat[0]|null;
+    const ans = stat[0]||null;
     return ans;
   } catch(e){
     console.error(e);
