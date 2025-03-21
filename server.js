@@ -16,6 +16,7 @@ const{
   insertActionLog,
   insertEnvironmentCondition
 } = require("./models/database.cjs")
+const {getSheetStat} = require("./models/ggsheet.js")
 
 // Initialize express app
 const app = express();
@@ -79,6 +80,18 @@ app.get("/getCurrentStat", async (req, res) => {
   const {Sensor_ID} = req.query;
   try {
     const stat = await getCurrentStat(Sensor_ID);
+    res.status(200).json(stat);
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.get("/getSheetStat", async (req, res) => {
+  const {Sensor_ID} = req.query;
+  try {
+    const stat = await getSheetStat(Sensor_ID);
+    console.log(stat);
     res.status(200).json(stat);
   } catch (e) {
     console.error(e);
