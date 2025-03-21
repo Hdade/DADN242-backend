@@ -64,10 +64,21 @@ app.get("/getInfo", async (req, res) => {
   }
 });
 
+// app.get("/getCurrentStat", async (req, res) => {
+//   const {User_ID} = req.query;
+//   try {
+//     const stat = await getCurrentStat(User_ID);
+//     res.status(200).json(stat);
+//   } catch (e) {
+//     console.error(e);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
+
 app.get("/getCurrentStat", async (req, res) => {
-  const {User_ID} = req.query;
+  const {Sensor_ID} = req.query;
   try {
-    const stat = await getCurrentStat(User_ID);
+    const stat = await getCurrentStat(Sensor_ID);
     res.status(200).json(stat);
   } catch (e) {
     console.error(e);

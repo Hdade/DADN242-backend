@@ -58,25 +58,41 @@ const getInfo = async (User_ID)=> {
   }
 }
 
-const getCurrentStat = async (User_ID)=> {
+// const getCurrentStat = async (User_ID)=> {
+
+//   try {
+//     await client.connect();
+
+//     const database = client.db("SmartPlant");
+//     const sensorsCollection = database.collection("Sensor");
+//     const sensors = await sensorsCollection.find({"User_ID":User_ID}).toArray();
+//     const sensor_IDs = sensors.map(({Sensor_ID, ...rest})=>Sensor_ID)
+
+//     const logCollection = database.collection("Environment_Condition");
+//     const latestLogs = await logCollection.aggregate([
+//       {$match: { Sensor_ID: { $in: sensor_IDs } }},
+//       {$sort: { Measured_Time: -1 } },
+//       {$group: { _id: "$Sensor_ID", latestLog: { $first: "$$ROOT" }}},
+//       {$replaceRoot: { newRoot: "$latestLog" }},
+//       {$sort: { Measured_Time: -1 }}
+//     ]).toArray();
+//     return latestLogs;
+//   } catch(e){
+//     console.error(e);
+//   }finally {
+//     await client.close();
+//   }
+// }
+
+const getCurrentStat = async (Sensor_ID)=> {
 
   try {
     await client.connect();
-
     const database = client.db("SmartPlant");
-    const sensorsCollection = database.collection("Sensor");
-    const sensors = await sensorsCollection.find({"User_ID":User_ID}).toArray();
-    const sensor_IDs = sensors.map(({Sensor_ID, ...rest})=>Sensor_ID)
-
     const logCollection = database.collection("Environment_Condition");
-    const latestLogs = await logCollection.aggregate([
-      {$match: { Sensor_ID: { $in: sensor_IDs } }},
-      {$sort: { Measured_Time: -1 } },
-      {$group: { _id: "$Sensor_ID", latestLog: { $first: "$$ROOT" }}},
-      {$replaceRoot: { newRoot: "$latestLog" }},
-      {$sort: { Measured_Time: -1 }}
-    ]).toArray();
-    return latestLogs;
+    const stat = await logCollection.find({"Sensor_ID":Sensor_ID}).sort({Measured_Time:-1}).limit(1).toArray();
+    const ans = stat[0]|null;
+    return ans;
   } catch(e){
     console.error(e);
   }finally {
