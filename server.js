@@ -14,7 +14,8 @@ const{
   getSetting,
   changeActivation,
   insertActionLog,
-  insertEnvironmentCondition
+  insertEnvironmentCondition,
+  getAuthentication
 } = require("./models/database.cjs")
 const {getSheetStat} = require("./models/ggsheet.js")
 
@@ -38,7 +39,7 @@ app.get("/getSensor", async (req, res) => {
     const sensors = await getSensor(User_ID);
     res.status(200).json(sensors);
   } catch (e) {
-    console.error(e);
+    //console.error(e);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
@@ -49,7 +50,7 @@ app.get("/getOutputDevice", async (req, res) => {
     const devices = await getOutputDevice(User_ID);
     res.status(200).json(devices);
   } catch (e) {
-    console.error(e);
+    //console.error(e);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
@@ -60,7 +61,7 @@ app.get("/getInfo", async (req, res) => {
     const info = await getInfo(User_ID);
     res.status(200).json(info);
   } catch (e) {
-    console.error(e);
+    //console.error(e);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
@@ -76,13 +77,24 @@ app.get("/getInfo", async (req, res) => {
 //   }
 // });
 
+app.get("/getAuthentication", async (req, res) => {
+  const {User_ID, Password} = req.query;
+  try {
+    const auth = await getAuthentication(User_ID, Password);
+    res.status(200).json({Authentication:auth});
+  } catch (e) {
+    //console.error(e);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 app.get("/getCurrentStat", async (req, res) => {
   const {Sensor_ID} = req.query;
   try {
     const stat = await getCurrentStat(Sensor_ID);
     res.status(200).json(stat);
   } catch (e) {
-    console.error(e);
+    //console.error(e);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
@@ -94,7 +106,7 @@ app.get("/getSheetStat", async (req, res) => {
     console.log(stat);
     res.status(200).json(stat);
   } catch (e) {
-    console.error(e);
+    //console.error(e);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
@@ -105,7 +117,7 @@ app.get("/getActionLog", async (req, res) => {
     const log = await getActionLog(Output_ID);
     res.status(200).json(log);
   } catch (e) {
-    console.error(e);
+    //console.error(e);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
@@ -116,7 +128,7 @@ app.get("/getEnvironmentCondition", async (req, res) => {
     const log = await getEnvironmentCondition(Sensor_ID);
     res.status(200).json(log);
   } catch (e) {
-    console.error(e);
+    //console.error(e);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
@@ -129,7 +141,7 @@ app.get("/getSetting", async (req, res) => {
     const setting = await getSetting(Output_ID);
     res.status(200).json(setting);
   } catch (e) {
-    console.error(e);
+    //console.error(e);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
@@ -140,7 +152,7 @@ app.put("/changeActivation", async (req, res) => {
     const device = await changeActivation(Output_ID, Activation,Mode);
     res.status(200).json(device);
   } catch (e) {
-    console.error(e);
+    //console.error(e);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
@@ -152,7 +164,7 @@ app.post("/insertActionLog", async (req, res) => {
     const log = await insertActionLog(Action_Time, Output_ID, Action);
     res.status(201).json(log);
   } catch (e) {
-    console.error(e);
+    //console.error(e);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
@@ -164,7 +176,7 @@ app.post("/insertEnvironmentCondition", async (req, res) => {
     const log = await insertEnvironmentCondition(Measured_Time, Sensor_ID, Measured_Stat);
     res.status(201).json(log);
   } catch (e) {
-    console.error(e);
+    //console.error(e);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });

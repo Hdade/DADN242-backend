@@ -199,6 +199,22 @@ const insertEnvironmentCondition = async (Measured_Time, Sensor_ID, Measured_Sta
   }
 };
 
+const getAuthentication = async (User_ID, Password)=> {
+
+  try {
+    await client.connect();
+    const database = client.db("SmartPlant");
+    const logCollection = database.collection("Farmer");
+    const Log = await logCollection.find({User_ID:User_ID,Password:Password}).toArray();
+    console.log(Log[0]? true : false);
+    return Log[0]? true : false;
+  } catch(e){
+    console.error(e);
+  }finally {
+    await client.close();
+  }
+};
+
 module.exports = {
   getSensor,
   getOutputDevice,
@@ -209,5 +225,6 @@ module.exports = {
   getSetting,
   changeActivation,
   insertActionLog,
-  insertEnvironmentCondition
+  insertEnvironmentCondition,
+  getAuthentication
 };
