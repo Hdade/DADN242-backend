@@ -206,7 +206,7 @@ const getAuthentication = async (User_ID, Password)=> {
     const database = client.db("SmartPlant");
     const logCollection = database.collection("Farmer");
     const Log = await logCollection.find({User_ID:User_ID,Password:Password}).toArray();
-    console.log(Log[0]? true : false);
+    //console.log(Log[0]? true : false);
     return Log[0]? true : false;
   } catch(e){
     console.error(e);

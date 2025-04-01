@@ -81,7 +81,12 @@ app.get("/getAuthentication", async (req, res) => {
   const {User_ID, Password} = req.query;
   try {
     const auth = await getAuthentication(User_ID, Password);
-    res.status(200).json({Authentication:auth});
+    if (auth){
+      res.status(200).json({Authentication:auth});
+    }
+    else{
+      res.status(404).json({Authentication:auth});
+    }
   } catch (e) {
     //console.error(e);
     res.status(500).json({ error: "Internal Server Error" });
