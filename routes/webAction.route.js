@@ -19,17 +19,17 @@ router.put("/setLightLimit", async (req,res) =>{
   
 });
 
-// router.put("/setSoilMoistureLimit", async (req,res) =>{
-//   const {Limit } = req.body;
-//   try{
-//     const adafruitRes = await Adafruit.changeLightLimt(Limit);
-//     const databaseRes = await MongoDB.changeLimit("SMS01",Limit);
-//     res.status(200).json({...adafruitRes,...databaseRes});
-//   } catch(e){
-//     console.log(e);
-//     res.status(500).json({ error: "Internal Server Error" });
-//   }
+router.put("/setSoilMoistureLimit", async (req,res) =>{
+  const {Limit } = req.body;
+  try{
+    const adafruitRes = await Adafruit.changeSoilMoistureLimit(Limit);
+    const databaseRes = await MongoDB.changeLimit("SMS01",Limit);
+    res.status(200).json({...adafruitRes,...databaseRes});
+  } catch(e){
+    console.log(e);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
   
-// });
+});
 
 module.exports = router;
