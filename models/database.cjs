@@ -1,4 +1,4 @@
-const { MongoClient } = require("mongodb");
+const { MongoClient, Double } = require("mongodb");
 require("dotenv").config({path:"../config.env"})
 
 const uri = process.env.ATLAS_URI;
@@ -172,6 +172,18 @@ class MongoDB{
       await client.close();
     }
   };
+
+  static changeLimit = async (Sensor_ID,Limit) =>{
+    try{
+      await client.connect();
+      const database = client.db("SmartPlant");
+      const sensorCollection = database.collection("Sensor");
+      const change = await sensorCollection.updateOne({Sensor_ID:Sensor_ID},{$set:{Limit:new Double(Limit)}});
+      return change;
+    }catch(e){
+      throw(e);
+    }
+  }
 }
 
 

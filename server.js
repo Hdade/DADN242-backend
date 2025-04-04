@@ -5,6 +5,7 @@ const path = require('path');
 
 require("dotenv").config({path:"./config.env"})
 const login = require('./routes/login.route');
+const webAction = require('./routes/webAction.route');
 
 // Initialize express app
 const app = express();
@@ -20,8 +21,8 @@ app.use(morgan('dev')); // Request logging
 
 // API routes
 
+app.use("/webAction",webAction);
 app.use("/",login);
-// app.use();
 
 // Start server
 app.listen(PORT, () => {
