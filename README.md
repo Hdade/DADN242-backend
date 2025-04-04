@@ -2,9 +2,11 @@
 
 This project provides a backend API server using Express.js.
 
-## Last Updated: 2025-03-17
+## API Endpoints
 
-## Maintainer: kchan139
+The API base URL is: `http://localhost:5000/`
+
+This project is deployed at: `https://dadn-242-backend.vercel.app`
 
 ## Available Scripts
 
@@ -25,13 +27,6 @@ The server will be available at [http://localhost:5000](http://localhost:5000).
 
 ### `npm test`
 
-## API Endpoints
-
-The API base URL is: `http://localhost:5000/`
-
-## Learn More
-
-To learn Express, check out the [Express documentation](https://expressjs.com/).
 
 ## Database
 
