@@ -37,10 +37,5 @@ To learn Express, check out the [Express documentation](https://expressjs.com/).
 
 Ask @Hdade to have access to database URL
 
-## Library added
-
-Mongodb: `npm install mongodb`
-
-Dotenv: `npm install dotenv`
 
 
