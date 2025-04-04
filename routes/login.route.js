@@ -114,7 +114,7 @@ router.get("/getEnvironmentCondition", async (req, res) => {
 //#region circuit apis
 
 router.get("/getSetting", async (req, res) => {
-  const {Output_ID} = req.body;
+  const {Output_ID} = req.query;
   try {
     const setting = await MongoDB.getSetting(Output_ID);
     res.status(200).json(setting);
