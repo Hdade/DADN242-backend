@@ -20,7 +20,8 @@ app.use(morgan('dev')); // Request logging
 
 // API routes
 
-app.use("/",login)
+app.use("/",login);
+// app.use();
 
 // Start server
 app.listen(PORT, () => {
