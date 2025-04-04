@@ -1,4 +1,4 @@
-const { MongoClient, Double } = require("mongodb");
+const { MongoClient, Double, Db } = require("mongodb");
 require("dotenv").config({path:"../config.env"})
 
 const uri = process.env.ATLAS_URI;
@@ -182,6 +182,36 @@ class MongoDB{
       return change;
     }catch(e){
       throw(e);
+    } finally {
+      await client.close();
+    }
+  }
+
+  static changeMode = async (User_ID, Mode) =>{
+    try{
+      await client.connect();
+      const database = client.db("SmartPlant");
+      const outputCollection = database.collection("Output_Device");
+      const change = await outputCollection.updateMany({User_ID:User_ID}, {$set:{Mode:Mode}});
+      return change;
+    } catch(e){
+      throw (e);
+    } finally {
+      await client.close();
+    }
+  }
+
+  static changeActivation = async (Output_ID,Activation) =>{
+    try{
+      await client.connect();
+      const database = client.db("SmartPlant");
+      const outputCollection = database.collection("Output_Device");
+      const change = await outputCollection.updateOne({Output_ID:Output_ID}, {$set:{Activation:Activation}});
+      return change;
+    }catch(e){
+      throw e;
+    }finally{
+      await client.close();
     }
   }
 }
