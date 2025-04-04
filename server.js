@@ -4,19 +4,7 @@ const morgan = require('morgan');
 const path = require('path');
 
 require("dotenv").config({path:"./config.env"})
-const{
-  getSensor,
-  getOutputDevice,
-  getInfo,
-  getCurrentStat,
-  getActionLog,
-  getEnvironmentCondition,
-  getSetting,
-  changeActivation,
-  insertActionLog,
-  insertEnvironmentCondition,
-  getAuthentication
-} = require("./models/database.cjs")
+const{MongoDB} = require("./models/database.cjs")
 const {getSheetStat} = require("./models/ggsheet.js")
 
 // Initialize express app
@@ -36,7 +24,7 @@ app.use(morgan('dev')); // Request logging
 app.get("/getSensor", async (req, res) => {
   const {User_ID} = req.query;
   try {
-    const sensors = await getSensor(User_ID);
+    const sensors = await MongoDB.getSensor(User_ID);
     res.status(200).json(sensors);
   } catch (e) {
     //console.error(e);
@@ -47,7 +35,7 @@ app.get("/getSensor", async (req, res) => {
 app.get("/getOutputDevice", async (req, res) => {
   const {User_ID} = req.query;
   try {
-    const devices = await getOutputDevice(User_ID);
+    const devices = await MongoDB.getOutputDevice(User_ID);
     res.status(200).json(devices);
   } catch (e) {
     //console.error(e);
@@ -58,7 +46,7 @@ app.get("/getOutputDevice", async (req, res) => {
 app.get("/getInfo", async (req, res) => {
   const {User_ID} = req.query;
   try {
-    const info = await getInfo(User_ID);
+    const info = await MongoDB.getInfo(User_ID);
     res.status(200).json(info);
   } catch (e) {
     //console.error(e);
@@ -80,7 +68,7 @@ app.get("/getInfo", async (req, res) => {
 app.get("/getAuthentication", async (req, res) => {
   const {User_ID, Password} = req.query;
   try {
-    const auth = await getAuthentication(User_ID, Password);
+    const auth = await MongoDB.getAuthentication(User_ID, Password);
     if (auth){
       res.status(200).json({Authentication:auth});
     }
@@ -96,7 +84,7 @@ app.get("/getAuthentication", async (req, res) => {
 app.get("/getCurrentStat", async (req, res) => {
   const {Sensor_ID} = req.query;
   try {
-    const stat = await getCurrentStat(Sensor_ID);
+    const stat = await MongoDB.getCurrentStat(Sensor_ID);
     res.status(200).json(stat);
   } catch (e) {
     //console.error(e);
@@ -119,7 +107,7 @@ app.get("/getSheetStat", async (req, res) => {
 app.get("/getActionLog", async (req, res) => {
   const {Output_ID} = req.query;
   try {
-    const log = await getActionLog(Output_ID);
+    const log = await MongoDB.getActionLog(Output_ID);
     res.status(200).json(log);
   } catch (e) {
     //console.error(e);
@@ -130,7 +118,7 @@ app.get("/getActionLog", async (req, res) => {
 app.get("/getEnvironmentCondition", async (req, res) => {
   const {Sensor_ID} = req.query;
   try {
-    const log = await getEnvironmentCondition(Sensor_ID);
+    const log = await MongoDB.getEnvironmentCondition(Sensor_ID);
     res.status(200).json(log);
   } catch (e) {
     //console.error(e);
@@ -143,7 +131,7 @@ app.get("/getEnvironmentCondition", async (req, res) => {
 app.get("/getSetting", async (req, res) => {
   const {Output_ID} = req.body;
   try {
-    const setting = await getSetting(Output_ID);
+    const setting = await MongoDB.getSetting(Output_ID);
     res.status(200).json(setting);
   } catch (e) {
     //console.error(e);
@@ -154,7 +142,7 @@ app.get("/getSetting", async (req, res) => {
 app.put("/changeActivation", async (req, res) => {
   const {Output_ID, Activation, Mode} = req.body;
   try {
-    const device = await changeActivation(Output_ID, Activation,Mode);
+    const device = await MongoDB.changeActivation(Output_ID, Activation,Mode);
     res.status(200).json(device);
   } catch (e) {
     //console.error(e);
@@ -166,7 +154,7 @@ app.post("/insertActionLog", async (req, res) => {
   const {Output_ID, Action} = req.body;
   const Action_Time = new Date()
   try {
-    const log = await insertActionLog(Action_Time, Output_ID, Action);
+    const log = await MongoDB.insertActionLog(Action_Time, Output_ID, Action);
     res.status(201).json(log);
   } catch (e) {
     //console.error(e);
@@ -178,7 +166,7 @@ app.post("/insertEnvironmentCondition", async (req, res) => {
   const {Sensor_ID, Measured_Stat} = req.body;
   const Measured_Time = new Date()
   try {
-    const log = await insertEnvironmentCondition(Measured_Time, Sensor_ID, Measured_Stat);
+    const log = await MongoDB.insertEnvironmentCondition(Measured_Time, Sensor_ID, Measured_Stat);
     res.status(201).json(log);
   } catch (e) {
     //console.error(e);
