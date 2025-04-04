@@ -102,7 +102,7 @@ class MongoDB{
       const sensors = await sensorsCollection.find({"Output_ID":Output_ID}).toArray();
       const sensor = sensors[0] || null;
 
-      const ans = {Mode:device.Mode, Activation: device.Activation, Limit: sensor.Limit};
+      const ans = {Mode:device.Mode, Activation: device.Activation? 'on': 'off', Limit: sensor.Limit};
       console.log (ans);
       return ans;
     } catch(e){
