@@ -6,6 +6,7 @@ const path = require('path');
 require("dotenv").config({path:"./config.env"})
 const login = require('./routes/login.route');
 const webAction = require('./routes/webAction.route');
+const adafruitAction = require('./routes/adafruitAction.route')
 
 // Initialize express app
 const app = express();
@@ -22,6 +23,7 @@ app.use(morgan('dev')); // Request logging
 // API routes
 
 app.use("/webAction",webAction);
+app.use("/adafruitAction",adafruitAction);
 app.use("/",login);
 
 // Start server
