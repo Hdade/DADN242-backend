@@ -4,7 +4,7 @@ User_key = process.env.ADAFRUIT_USER_KEY;
 Light_feed = process.env.ADAFRUIT_LIGHT_FEED;
 Soil_moisture_feed = process.env.ADAFRUIT_SOIL_MOISTURE_FEED;
 ADAFRUIT_ACTIVE_KEY = process.env.ADAFRUIT_ACTIVE_KEY;
-Mode_feed = process.env.ADAFRUIT_SOIL_MOISTURE_FEED;
+Mode_feed = process.env.ADAFRUIT_MODE;
 Light= process.env.ADAFRUIT_LIGHT;
 Water_pump = process.env.ADAFRUIT_PUMP;
 
