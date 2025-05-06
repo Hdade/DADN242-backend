@@ -133,6 +133,12 @@ class MongoDB{
       await client.connect();
       const database = client.db("SmartPlant");
       const logCollection = database.collection("Action_Log");
+      const latestLog = await logCollection.findOne({"Output_ID":Output_ID}, {sort:{"Action_Time":-1}});
+      console.log(latestLog);
+      console.log(Action)
+      if (latestLog && latestLog.Action === Action){
+        return latestLog
+      }
       const Log = await logCollection.insertOne({Action_Time:Action_Time, Action:Action, Output_ID:Output_ID});
       return Log;
     } catch(e){
