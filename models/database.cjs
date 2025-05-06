@@ -134,8 +134,8 @@ class MongoDB{
       const database = client.db("SmartPlant");
       const logCollection = database.collection("Action_Log");
       const latestLog = await logCollection.findOne({"Output_ID":Output_ID}, {sort:{"Action_Time":-1}});
-      console.log(latestLog);
-      console.log(Action)
+      // console.log(latestLog);
+      // console.log(Action)
       if (latestLog && latestLog.Action === Action){
         return latestLog
       }
