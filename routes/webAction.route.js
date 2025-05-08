@@ -68,5 +68,16 @@ router.put("/changeWaterPumpActivation", async (req,res) =>{
   }
 });
 
+router.get("/getDailyStat", async (req,res)=>{
+  const {Sensor_ID,date} = req.query;
+  try{
+    const dailyStat = await MongoDB.getAverageStat(Sensor_ID,date);
+    res.status(200).json(dailyStat)
+  }catch(e){
+    //console.log(e);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+})
+
 
 module.exports = router;

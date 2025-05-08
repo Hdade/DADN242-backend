@@ -220,6 +220,32 @@ class MongoDB{
       await client.close();
     }
   }
+
+  static getAverageStat = async (Sensor_ID,date)=>{
+    try{
+      await client.connect();
+      const database = client.db("SmartPlant");
+      const statCollection = database.collection("Environment_Condition");
+      let averageStat = [];
+      for (let i = 0; i < 12; i++) {
+        const dayStat = await statCollection.find({Sensor_ID:Sensor_ID,Measured_Time:{
+        $gte: new Date(date + "T"+(i*2).toString()+":00:00+07:00"), $lte: new Date(date + "T"+((i*2)+1).toString()+":59:59+07:00")}},{sort:{Measured_Time:1}}).toArray();
+        if (dayStat.length === 0) {
+          averageStat[i] = 0;
+          continue;
+        }
+        const sum = dayStat.reduce((a,b)=>a + b.Measured_Stat,0)
+        averageStat[i] = sum / dayStat.length;
+      }
+      
+      return averageStat;
+    }catch (e){
+      console.log(e)
+      throw e;
+    }finally{
+      await client.close();
+    }
+  }
 }
 
 
