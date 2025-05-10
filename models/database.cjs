@@ -229,18 +229,24 @@ class MongoDB{
       let averageStat = [];
       for (let i = 0; i < 12; i++) {
         const dayStat = await statCollection.find({Sensor_ID:Sensor_ID,Measured_Time:{
-        $gte: new Date(date + "T"+(i*2).toString()+":00:00+07:00"), $lte: new Date(date + "T"+((i*2)+1).toString()+":59:59+07:00")}},{sort:{Measured_Time:1}}).toArray();
-        if (dayStat.length === 0) {
+        $gte: new Date(date + "T"+(i*2).toString().padStart(2, "0")+":00:00+07:00"), $lte: new Date(date + "T"+((i*2)+1).toString().padStart(2, "0")+":59:59+07:00")}},{sort:{Measured_Time:1}}).toArray();
+        console.log(dayStat);
+        console.log(new Date(date + "T"+(i*2).toString()+":00:00+07:00"));
+        console.log(date + "T"+(i*2).toString()+":00:00+07:00");
+        console.log(new Date(date + "T"+((i*2)+1).toString()+":59:59+07:00"));
+        console.log(date + "T"+((i*2)+1).toString()+":59:59+07:00");
+
+        if (dayStat.length == 0) {
           averageStat[i] = 0;
           continue;
         }
-        const sum = dayStat.reduce((a,b)=>a + b.Measured_Stat,0)
+        const sum = dayStat.reduce((a,b)=>a + b.Measured_Stat,0);
         averageStat[i] = sum / dayStat.length;
       }
       
       return averageStat;
     }catch (e){
-      console.log(e)
+      // console.log(e)
       throw e;
     }finally{
       await client.close();
